@@ -48,6 +48,7 @@ $(document).ready(function(){
 		displayFeedback("Make Your Guess!");
 		clearField();
 		removeGuesses();
+		victory = false;
 	};
 
 	newGame();
