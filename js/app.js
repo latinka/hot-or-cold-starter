@@ -12,61 +12,132 @@ $(document).ready(function(){
   		$(".overlay").fadeOut(1000);
   	});
 
-  	/*--- Restart game  ---*/
-  	$(".new").click(function(){
-  		console.log("New game");
-  		randomNumber;
-  	});
-
   	/*--- Declare variables ---*/
-  	var randomNumber = Math.floor((Math.random() * 100) + 1);
-  		console.log("The secret number is " + randomNumber);
-  	var guessCount = 0;
-  	var newGuess = $("#userGuess").val();
+  	var guessCount = 0; 
+  	var randomNumber;
+  	var difference;
+  	var newGuess;
   	var victory = false;
-  	var difference = Math.abs(randomNumber - newGuess);
   	
-  	
-
   	/*--- Display Feedback ---*/
   	var displayFeedback = function(feedback) {
   		$("#feedback").text(feedback);
   	};
 
+  	/*--- Clear guess field ---*/
+  	var clearField = function() {
+	$("#userGuess").val(" ").focus();
+	};
+
+	/*--- Show the number of guesses ---*/
+	var guessNumber = function() {
+		$("#count").text(guessCount);
+	};
+
+	/*--- Remove previous guesses ---*/
+	var removeGuesses = function(){
+		$("ul.guessBox li").remove();
+	};
+
+	/*--- Start a new game ---*/
+	var newGame = function(){
+  		randomNumber = Math.floor((Math.random() * 100) + 1);
+		console.log("The secret number is " + randomNumber);
+		guessCount = 0
+		guessNumber();
+		displayFeedback("Make Your Guess!");
+		clearField();
+		removeGuesses();
+	};
+
+	newGame();
+
   	/*--- User guesses ---*/
   	$("form").submit(function(event) {
-  		console.log("UserGuess");
+  		if (victory === true) {
+			alert("The victory is yours! Start a new game!");
+		}
+		else {
   		event.preventDefault();
+  		newGuess = $("#userGuess").val();
+  		difference = Math.abs(randomNumber - newGuess);
   		thermometer();
+  		guessCount++;
+  		guessNumber();
+  		$("#guessList").append("<li>" + newGuess + "</li>");
+  		clearField();
+  		}
   	});
 
   	/*---Check the guess number and display feedback ---*/
   	var thermometer = function(){
-  		console.log("thermometer()");
   		if (difference === 0) {
   			displayFeedback("You're a hero!");
-			$("#userGuess").val(randomNumber + "!");
 			victory = true;
 		}
-		else if (difference > 1 && difference < 10) {
-			displayFeedback("Very hot!");
+		else if (difference > 0 && difference <= 5 && newGuess < randomNumber) {
+			displayFeedback("Scorching! Guess higher!");
 		}
-		else if (difference > 10 && difference < 20) {
-			displayFeedback("Hot!");
+		else if (difference > 0 && difference <= 5 && newGuess > randomNumber) {
+			displayFeedback("Scorching! Guess lower!");
 		}
-		else if (difference > 20 && difference < 30) {
-			displayFeedback("Warm!");
+		else if (difference > 5 && difference <= 10 && newGuess < randomNumber) {
+			displayFeedback("Burning! Guess higher!");
 		}
-		else if (difference > 30 && difference < 50) {
-			displayFeedback("Cold!");
+		else if (difference > 5 && difference <= 10 && newGuess > randomNumber) {
+			displayFeedback("Burning! Guess lower!");
 		}
-		else if (difference > 50 && difference < 99) {
-			displayFeedback("Ice cold!");
+		else if (difference > 10 && difference <= 15 && newGuess < randomNumber) {
+			displayFeedback("Very hot! Guess higher!");
+		}
+		else if (difference > 10 && difference <= 15 && newGuess > randomNumber) {
+			displayFeedback("Very hot! Guess lower!");
+		}
+		else if (difference > 15 && difference <= 20 && newGuess < randomNumber) {
+			displayFeedback("Hot! Guess higher!");
+		}
+		else if (difference > 15 && difference <= 20 && newGuess > randomNumber) {
+			displayFeedback("Hot! Guess lower!");
+		}
+		else if (difference > 20 && difference <= 25 && newGuess < randomNumber) {
+			displayFeedback("Warm! Guess higher!");
+		}
+		else if (difference > 20 && difference <= 25 && newGuess > randomNumber) {
+			displayFeedback("Warm! Guess lower!");
+		}
+		else if (difference > 25 && difference <= 30 && newGuess < randomNumber) {
+			displayFeedback("Lukewarm! Guess higher!");
+		}
+		else if (difference > 25 && difference <= 30 && newGuess > randomNumber) {
+			displayFeedback("Lukewarm! Guess lower!");
+		}
+		else if (difference > 30 && difference <= 40 && newGuess < randomNumber) {
+			displayFeedback("Cool! Guess higher!");
+		}
+		else if (difference > 30 && difference <= 40 && newGuess > randomNumber) {
+			displayFeedback("Cool! Guess lower!");
+		}
+		else if (difference > 40 && difference <= 50 && newGuess < randomNumber) {
+			displayFeedback("Cold! Guess higher!");
+		}
+		else if (difference > 40 && difference <= 50 && newGuess > randomNumber) {
+			displayFeedback("Cold! Guess lower!");
+		}
+		else if (difference > 50 && difference <= 99 && newGuess < randomNumber) {
+			displayFeedback("Freezing! Guess higher!");
+		}
+		else if (difference > 50 && difference <= 99 && newGuess > randomNumber) {
+			displayFeedback("Freezing! Guess lower!");
 		}
 		else {
-			alert("You must chose a number between 1 and 100!")
+			alert("You must chose a number between 1 and 100!");
 		}
   	};
+
+  	/*--- Restart game  ---*/
+  	$(".new").click(function(){
+  		newGame();
+  	});
 
 });
 
