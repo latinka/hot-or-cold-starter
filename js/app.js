@@ -43,7 +43,7 @@ $(document).ready(function(){
 	var newGame = function(){
   		randomNumber = Math.floor((Math.random() * 100) + 1);
 		console.log("The secret number is " + randomNumber);
-		guessCount = 0
+		guessCount = 0;
 		guessNumber();
 		displayFeedback("Make Your Guess!");
 		clearField();
