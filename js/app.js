@@ -26,7 +26,7 @@ $(document).ready(function(){
 
   	/*--- Clear guess field ---*/
   	var clearField = function() {
-	$("#userGuess").val(" ").focus();
+	$("#userGuess").val("").focus();
 	};
 
 	/*--- Show the number of guesses ---*/
